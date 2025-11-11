@@ -2,73 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Match MyElectroKart style adapted for Esinti */
-@layer base {
-  :root {
-    /* Basic palette */
-    --background: 0 0% 98%;                /* almost white */
-    --foreground: 210 15% 10%;             /* dark grey text */
-    --card: 0 0% 100%;                     /* pure white card background */
-    --card-foreground: 210 15% 10%;
-    --border: 210 10% 85%;                 /* light grey border */
-    --input-bg: 0 0% 100%;                 /* input bg */
-    
-    /* Accent / buttons */
-    --primary: 215 90% 50%;                /* vibrant blue-ish */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 340 60% 50%;              /* soft purple/pink accent */
-    --secondary-foreground: 0 0% 100%;
-    --muted: 210 15% 95%;                  /* very light grey for muted text */
-    --muted-foreground: 210 15% 40%;
-    
-    /* Status colors */
-    --destructive: 0 75% 50%;             
-    --destructive-foreground: 0 0% 100%;
-    
-    /* Border radius & shadows */
-    --radius: 0.5rem;
-    --shadow-card: 0 4px 12px hsl(210 15% 10% / 0.06);
-    --shadow-hover: 0 8px 20px hsl(215 90% 50% / 0.15);
-    
-    /* Gradients (if needed) */
-    --gradient-button: linear-gradient(135deg, hsl(215 90% 50%) 0%, hsl(215 80% 55%) 100%);
-  }
-}
+/* ✅ Import Google Font (Poppins) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* -------------------------------------------------
+   🎨 Esinti Design System
+   Define all colors, gradients, shadows, etc here.
+   All colors MUST be HSL values.
+-------------------------------------------------- */
 
 @layer base {
+  :root {
+    --background: 270 33% 98%;
+    --foreground: 0 0% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
+
+    --primary: 300 13% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 257 29% 33%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 270 30% 96%;
+    --muted-foreground: 0 0% 33%;
+
+    --accent: 51 100% 50%;
+    --accent-foreground: 0 0% 18%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 20% 92%;
+    --input: 270 20% 94%;
+    --ring: 300 13% 48%;
+
+    --radius: 1rem;
+
+    /* 🌈 Esinti Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(300 13% 48%) 0%, hsl(257 29% 33%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(300 13% 48%) 0%, hsl(257 29% 33%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(300 13% 48%) 0%, hsl(257 29% 33%) 100%);
+    --gradient-footer: linear-gradient(135deg, hsl(300 13% 48%) 0%, hsl(257 29% 33%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(51 100% 50%) 0%, hsl(45 100% 48%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(270 33% 99%) 100%);
+    
+    /* 💡 Esinti Shadows */
+    --shadow-glow: 0 4px 20px hsl(300 13% 48% / 0.25);
+    --shadow-purple: 0 8px 30px hsl(300 13% 48% / 0.3);
+    --shadow-card: 0 4px 15px hsl(0 0% 0% / 0.08);
+    --shadow-hover: 0 12px 40px hsl(300 13% 48% / 0.35);
+    --shadow-gold: 0 4px 20px hsl(51 100% 50% / 0.4);
+
+    /* Hover overlay */
+    --hover-overlay: hsl(257 29% 33% / 0.15);
+
+    /* Sidebar styling */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 17%;
+    --sidebar-primary: 248 53% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 30% 96%;
+    --sidebar-accent-foreground: 0 0% 17%;
+    --sidebar-border: 270 20% 92%;
+    --sidebar-ring: 248 53% 58%;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font‑family['Poppins',sans‑serif] leading‑relaxed;
+    @apply bg-background text-foreground;
   }
+}
 
-  a, button {
-    @apply transition duration‑200 ease‑in‑out;
-  }
-
-  button {
-    @apply bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] rounded-[var(--radius)] px‑5 py‑2 font‑medium shadow‑card hover:shadow‑hover hover:brightness‑105;
-  }
-
-  .btn-secondary {
-    @apply bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] rounded-[var(--radius)] px‑4 py‑2 shadow‑card hover:shadow‑hover;
-  }
-
-  .card {
-    @apply bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] rounded-[var(--radius)] shadow‑card p‑6 hover:shadow‑hover transition-shadow;
-  }
-
-  input, textarea {
-    @apply bg-[hsl(var(--input-bg))] border rounded-[var(--radius)] px‑4 py‑2 focus:ring‑2 focus:ring‑[hsl(var(--primary))] outline‑none;
-  }
-
-  .badge {
-    @apply inline-block px‑2 py‑1 rounded‑full text‑xs font‑semibold bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))];
-  }
-
-  .muted {
-    @apply text-[hsl(var(--muted-foreground))];
-  }
+/* ✅ Apply Poppins font globally (outside Tailwind layer) */
+body {
+  font-family: 'Poppins', sans-serif;
 }
