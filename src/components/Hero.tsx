@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-hero">
+    <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden ">
       {/* Decorative animated background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse-glow" />

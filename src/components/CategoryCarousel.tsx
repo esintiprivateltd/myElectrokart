@@ -5,14 +5,14 @@ import { Cable, Lightbulb, Zap, Settings, Package, Boxes, Wrench, Circle } from 
 const categories = [
   { name: "Heavy Duty Connector", icon: Cable, path: "/products?category=heavy-duty-connector" },
   { name: "UV Lamp", icon: Lightbulb, path: "/products?category=uv-lamp" },
-  { name: "Hot Foiling Machine", icon: Settings, path: "/products?category=hot-foil-machine" },
+  { name: "Hot Foil Stamping Machine", icon: Settings, path: "/products?category=hot-foil-machine" },
   { name: "Planetary Gear Box", icon: Settings, path: "/products?category=planetary-gearbox" },
   { name: "IR Lamp", icon: Lightbulb, path: "/products?category=ir-lamp" },
   { name: "Encoders & Accessories", icon: Circle, path: "/products?category=encoders" },
   { name: "Diaphragm Pump", icon: Package, path: "/products?category=diaphragm-pump" },
   { name: "Tresu Rubber", icon: Boxes, path: "/products?category=tresu-rubber" },
   { name: "IR Clamps", icon: Wrench, path: "/products?category=ir-clamps" },
-  { name: "Electronic Ballast", icon: Zap, path: "/products?category=ballasts" },
+  { name: "Electronic Power Supply", icon: Zap, path: "/products?category=ballasts" },
 ];
 
 const CategoryCarousel = () => {
