@@ -9,7 +9,7 @@ const AboutPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 pt-28 pb-16">
         <div className="max-w-5xl mx-auto space-y-12">
           {/* Header */}
           <div className="text-center">
@@ -114,8 +114,8 @@ const AboutPage = () => {
                     <Globe className="h-6 w-6 text-primary mt-1" />
                     <div>
                       <p className="font-semibold text-secondary">Website</p>
-                      <a href="https://www.sparesshop.net" className="text-primary hover:underline">
-                        www.sparesshop.net
+                      <a href="https://www.myelectrokart.com" className="text-primary hover:underline">
+                       www.myelectrokart.com
                       </a>
                     </div>
                   </div>

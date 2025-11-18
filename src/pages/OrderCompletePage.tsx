@@ -10,7 +10,7 @@ export default function OrderCompletePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 flex items-center justify-center px-4 py-20">
+      <main className="flex-1 flex items-center justify-center px-4 pt-28 pb-12">
         <div className="bg-card rounded-2xl shadow-card p-12 text-center max-w-2xl">
           <div className="flex justify-center mb-6">
             <CheckCircle className="w-20 h-20 text-green-500" />
@@ -25,15 +25,15 @@ export default function OrderCompletePage() {
             We've received your order and will send you a confirmation email
             shortly. Your items will be shipped within 2-3 business days.
           </p>
-          <div className="flex gap-4 justify-center">
-            <Link to="/">
-              <Button variant="default" size="lg">
-                Continue Shopping
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/track-order">
+              <Button variant="default" size="lg" className="w-full sm:w-auto">
+                Track Order
               </Button>
             </Link>
-            <Link to="/products">
-              <Button variant="outline" size="lg">
-                View All Products
+            <Link to="/">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                Continue Shopping
               </Button>
             </Link>
           </div>

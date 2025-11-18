@@ -65,6 +65,14 @@ const Footer = () => {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link 
+                  to="/track-order" 
+                  className="text-sm text-white/80 hover:text-accent transition-all duration-300 relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                >
+                  Track Order
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -72,8 +80,8 @@ const Footer = () => {
           <div>
             <h3 className="font-bold mb-4 text-lg">Connect With Us</h3>
             <ul className="space-y-2 text-sm text-white/80 mb-4">
-              <li>📧 esintiprivateltd@gmail.com</li>
-              <li>🌐 www.sparesshop.net</li>
+              <li>📧 hr@sparesshop.net</li>
+              <li>🌐 www.myelectrokart.com</li>
               <li>📍 301, 3rd Floor, B-Block CCC, VIP Road, Zirakpur</li>
               <li>🏭 Plot No.6, Balaji Complex, Saidpura, DeraBassi</li>
               <li>🧾 GST: 03AAICE8326L1ZG</li>

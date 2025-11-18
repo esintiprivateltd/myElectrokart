@@ -8,7 +8,7 @@ const PrivacyPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 pt-28 pb-16">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -176,7 +176,7 @@ const PrivacyPage = () => {
                 If you have any questions or concerns about our privacy practices, please contact us:
               </p>
               <p className="font-semibold">Email: esintiprivateltd@gmail.com</p>
-              <p className="font-semibold">Phone: +91 98765 43210</p>
+              <p className="font-semibold">Phone: +91 9056264535</p>
             </CardContent>
           </Card>
         </div>

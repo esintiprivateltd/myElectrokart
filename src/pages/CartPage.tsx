@@ -31,7 +31,7 @@ const CartPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-24">
+      <div className="container mx-auto px-4 pt-28 pb-12">
         <div className="mb-8 animate-fade-up">
           <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-2">Shopping Cart</h1>
           <p className="text-muted-foreground">Review your items before checkout</p>

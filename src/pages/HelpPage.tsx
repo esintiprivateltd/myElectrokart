@@ -41,7 +41,7 @@ const HelpPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 pt-28 pb-16">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -168,7 +168,7 @@ const HelpPage = () => {
                   Chat on WhatsApp
                 </Button>
                 <Button variant="outline" className="rounded-full">
-                  Call Us: +91 98765 43210
+                  Call Us: +91 9056264535
                 </Button>
               </div>
             </CardContent>

@@ -1,58 +1,138 @@
-import { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { PRODUCTS } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useWishlist } from "@/contexts/WishlistContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ProductReviews from "@/components/ProductReviews";
+import ProductImageGallery from "@/components/ProductImageGallery";
+import ProductVariantSelector from "@/components/ProductVariantSelector";
+import ProductShareButtons from "@/components/ProductShareButtons";
+import ProductDescription from "@/components/ProductDescription";
+import ProductFeaturesApplications from "@/components/ProductFeaturesApplications";
+import TechnicalSpecifications from "@/components/TechnicalSpecifications";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Star, ShoppingCart, CreditCard } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Minus, Plus, Star, ShoppingCart, CreditCard, Heart } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { toast } = useToast();
   const product = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
 
-  const [variant, setVariant] = useState("4");
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    product.hasVariants && product.variants ? product.variants[0].id : "default"
+  );
   const [qty, setQty] = useState(1);
+  const inWishlist = isInWishlist(product.id);
+
+  // Get current variant details
+  const currentVariant = product.hasVariants && product.variants
+    ? product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
+    : null;
+
+  // Update price and details based on selected variant
+  const displayPrice = currentVariant ? currentVariant.price : product.price;
+  const displayOldPrice = currentVariant ? currentVariant.oldPrice : product.oldPrice;
+  const displaySku = currentVariant ? currentVariant.sku : product.id;
+  const isInStock = currentVariant ? currentVariant.inStock : true;
+
+  // Get images for current variant or fallback to product images
+  const displayImages = currentVariant && currentVariant.images && currentVariant.images.length > 0
+    ? currentVariant.images
+    : product.images || [product.image];
+
+  // Reset quantity when variant changes
+  useEffect(() => {
+    setQty(1);
+  }, [selectedVariantId]);
 
   const handleAddToCart = () => {
+    if (!isInStock) {
+      toast({
+        title: "Out of Stock",
+        description: "This variant is currently unavailable.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const variantLabel = currentVariant ? currentVariant.label : "Default";
     addToCart({
       id: product.id,
-      title: product.title,
-      price: product.price,
-      variant,
+      title: `${product.title} - ${variantLabel}`,
+      price: displayPrice,
+      variant: variantLabel,
       quantity: qty,
       image: product.image,
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${product.title} (${variantLabel}) has been added to your cart.`,
     });
   };
 
   const handleBuyNow = () => {
+    if (!isInStock) {
+      toast({
+        title: "Out of Stock",
+        description: "This variant is currently unavailable.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const variantLabel = currentVariant ? currentVariant.label : "Default";
     addToCart({
       id: product.id,
-      title: product.title,
-      price: product.price,
-      variant,
+      title: `${product.title} - ${variantLabel}`,
+      price: displayPrice,
+      variant: variantLabel,
       quantity: qty,
       image: product.image,
     });
     navigate("/checkout");
   };
 
+  const handleWishlistToggle = () => {
+    if (inWishlist) {
+      removeFromWishlist(product.id);
+      toast({
+        title: "Removed from Wishlist",
+        description: `${product.title} has been removed from your wishlist.`,
+      });
+    } else {
+      addToWishlist({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+      });
+      toast({
+        title: "Added to Wishlist",
+        description: `${product.title} has been added to your wishlist.`,
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Product Image */}
-          <div className="space-y-4">
-            <div className="aspect-square bg-gradient-card rounded-2xl shadow-card overflow-hidden">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-              />
-            </div>
+          {/* Product Image Gallery */}
+          <div>
+            <ProductImageGallery 
+              images={displayImages} 
+              productTitle={product.title}
+              key={selectedVariantId}
+            />
           </div>
 
           {/* Product Info */}
@@ -86,36 +166,35 @@ export default function ProductDetailPage() {
 
             <div className="flex items-baseline gap-3">
               <span className="text-4xl font-bold text-primary">
-                ₹{product.price}
+                ₹{displayPrice.toFixed(2)}
               </span>
-              {product.oldPrice && (
+              {displayOldPrice && (
                 <span className="text-xl line-through text-muted-foreground">
-                  ₹{product.oldPrice}
+                  ₹{displayOldPrice.toFixed(2)}
                 </span>
               )}
             </div>
+            
+            {/* SKU Display */}
+            {displaySku && (
+              <div className="text-sm text-muted-foreground mt-2">
+                SKU: <span className="font-mono font-semibold">{displaySku}</span>
+              </div>
+            )}
 
             <p className="text-foreground/80 leading-relaxed">
-              {product.description}
+              {currentVariant && currentVariant.description ? currentVariant.description : product.description}
             </p>
 
-            {/* Pin Variant Selector */}
-            <div>
-              <label className="block text-sm font-medium mb-3">
-                Pin Variant
-              </label>
-              <select
-                value={variant}
-                onChange={(e) => setVariant(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
-              >
-                {[4, 6, 10, 16, 24, 32, 36, 48].map((v) => (
-                  <option key={v} value={v}>
-                    {v} Pin
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* Variant Selector */}
+            {product.hasVariants && product.variants && (
+              <ProductVariantSelector
+                variants={product.variants}
+                selectedVariant={selectedVariantId}
+                onVariantChange={setSelectedVariantId}
+                label={product.id === "ir-heating-lamp" ? "Total Length" : "Pin Configuration"}
+              />
+            )}
 
             {/* Quantity Selector */}
             <div>
@@ -142,35 +221,98 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4 pt-4">
+            <div className="space-y-4 pt-4">
+              <div className="flex gap-4">
+                <Button
+                  onClick={handleAddToCart}
+                  variant="default"
+                  size="lg"
+                  className="flex-1"
+                  disabled={!isInStock}
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  {isInStock ? 'Add to Cart' : 'Out of Stock'}
+                </Button>
+                <Button
+                  onClick={handleBuyNow}
+                  variant="gold"
+                  size="lg"
+                  className="flex-1"
+                  disabled={!isInStock}
+                >
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Buy Now
+                </Button>
+              </div>
               <Button
-                onClick={handleAddToCart}
-                variant="default"
+                onClick={handleWishlistToggle}
+                variant="outline"
                 size="lg"
-                className="flex-1"
+                className="w-full"
               >
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Add to Cart
-              </Button>
-              <Button
-                onClick={handleBuyNow}
-                variant="gold"
-                size="lg"
-                className="flex-1"
-              >
-                <CreditCard className="w-5 h-5 mr-2" />
-                Buy Now
+                <Heart className={`w-5 h-5 mr-2 ${inWishlist ? "fill-red-500 text-red-500" : ""}`} />
+                {inWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
               </Button>
             </div>
 
             {/* Stock Status */}
-            <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-green-700 font-medium">
-                ✅ In Stock – Fast Shipping Available
+            <div className={`flex items-center gap-2 p-4 rounded-lg border ${
+              isInStock 
+                ? 'bg-green-50 border-green-200' 
+                : 'bg-red-50 border-red-200'
+            }`}>
+              <div className={`w-2 h-2 rounded-full ${
+                isInStock 
+                  ? 'bg-green-500 animate-pulse' 
+                  : 'bg-red-500'
+              }`} />
+              <span className={`font-medium ${
+                isInStock 
+                  ? 'text-green-700' 
+                  : 'text-red-700'
+              }`}>
+                {isInStock 
+                  ? '✅ In Stock – Fast Shipping Available' 
+                  : '❌ Out of Stock – Select Another Variant'}
               </span>
             </div>
+
+            {/* Share Buttons */}
+            <div className="pt-6 border-t border-border">
+              <ProductShareButtons 
+                productUrl={typeof window !== 'undefined' ? window.location.href : ''}
+                productTitle={product.title}
+              />
+            </div>
           </div>
+        </div>
+
+        {/* Product Information Tabs */}
+        <div className="mt-16">
+          <Tabs defaultValue="description" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-4 mb-8">
+              <TabsTrigger value="description">Description</TabsTrigger>
+              <TabsTrigger value="specifications">Specifications</TabsTrigger>
+              <TabsTrigger value="features">Features & Applications</TabsTrigger>
+              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="description" className="space-y-6">
+              <ProductDescription variant={selectedVariantId} productId={product.id} />
+            </TabsContent>
+            
+            <TabsContent value="specifications" className="space-y-6">
+              <TechnicalSpecifications variant={selectedVariantId} productId={product.id} />
+            </TabsContent>
+            
+            <TabsContent value="features" className="space-y-6">
+              <ProductFeaturesApplications productId={product.id} variant={selectedVariantId} />
+            </TabsContent>
+            
+            <TabsContent value="reviews" className="space-y-6">
+              <ProductReviews />
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
       <Footer />

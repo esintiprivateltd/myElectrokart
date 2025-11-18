@@ -16,6 +16,8 @@ export default function CheckoutPage() {
     lastName: "",
     email: "",
     phone: "",
+    company: "",
+    gst: "",
     address: "",
     city: "",
     state: "",
@@ -33,7 +35,7 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <h1 className="text-4xl font-bold text-secondary mb-8">Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -75,6 +77,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, firstName: e.target.value })
                       }
+                      placeholder="Enter first name"
                     />
                   </div>
                   <div>
@@ -84,6 +87,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, lastName: e.target.value })
                       }
+                      placeholder="Enter last name"
                     />
                   </div>
                   <div>
@@ -94,6 +98,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, email: e.target.value })
                       }
+                      placeholder="Enter email address"
                     />
                   </div>
                   <div>
@@ -103,6 +108,27 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, phone: e.target.value })
                       }
+                      placeholder="Enter phone number"
+                    />
+                  </div>
+                  <div>
+                    <Label>Company Name</Label>
+                    <Input
+                      value={form.company}
+                      onChange={(e) =>
+                        setForm({ ...form, company: e.target.value })
+                      }
+                      placeholder="Enter company name (optional)"
+                    />
+                  </div>
+                  <div>
+                    <Label>GST</Label>
+                    <Input
+                      value={form.gst}
+                      onChange={(e) =>
+                        setForm({ ...form, gst: e.target.value })
+                      }
+                      placeholder="Enter GST number (optional)"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -112,6 +138,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, address: e.target.value })
                       }
+                      placeholder="Enter full address"
                     />
                   </div>
                   <div>
@@ -121,6 +148,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, city: e.target.value })
                       }
+                      placeholder="Enter city"
                     />
                   </div>
                   <div>
@@ -130,6 +158,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, state: e.target.value })
                       }
+                      placeholder="Enter state"
                     />
                   </div>
                   <div>
@@ -137,6 +166,7 @@ export default function CheckoutPage() {
                     <Input
                       value={form.zip}
                       onChange={(e) => setForm({ ...form, zip: e.target.value })}
+                      placeholder="Enter ZIP code"
                     />
                   </div>
                 </div>
