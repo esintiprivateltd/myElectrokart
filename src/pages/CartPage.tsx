@@ -31,10 +31,10 @@ const CartPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <div className="container mx-auto px-4 pt-28 pb-12">
-        <div className="mb-8 animate-fade-up">
-          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-2">Shopping Cart</h1>
-          <p className="text-muted-foreground">Review your items before checkout</p>
+      <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-24 lg:pt-28 pb-8 sm:pb-12">
+        <div className="mb-6 sm:mb-8 animate-fade-up">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary mb-2">Shopping Cart</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Review your items before checkout</p>
         </div>
 
         {cart.length === 0 ? (
@@ -53,45 +53,45 @@ const CartPage = () => {
         ) : (
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Cart Items */}
-            <div className="lg:col-span-2 space-y-4 animate-fade-up">
+            <div className="lg:col-span-2 space-y-3 sm:space-y-4 animate-fade-up">
               {cart.map((item, idx) => (
                 <Card key={`${item.id}-${item.variant}-${idx}`} className="overflow-hidden hover:shadow-hover transition-all">
-                  <CardContent className="p-6">
-                    <div className="flex gap-6">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex gap-3 sm:gap-6">
                       <img 
                         src={item.image} 
                         alt={item.title}
-                        className="w-28 h-28 object-cover rounded-xl"
+                        className="w-20 h-20 sm:w-28 sm:h-28 object-cover rounded-xl flex-shrink-0"
                       />
                       
-                      <div className="flex-1">
-                        <h3 className="font-bold text-lg text-secondary mb-1">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">Variant: {item.variant}</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-base sm:text-lg text-secondary mb-1 line-clamp-2">{item.title}</h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">Variant: {item.variant}</p>
                         
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                          <div className="flex items-center gap-2 sm:gap-3">
                             <Button 
                               variant="outline" 
                               size="icon" 
-                              className="h-8 w-8 rounded-full"
+                              className="h-7 w-7 sm:h-8 sm:w-8 rounded-full"
                               onClick={() => handleUpdateQuantity(item.id, item.variant, item.quantity - 1)}
                             >
-                              <Minus className="h-4 w-4" />
+                              <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
                             </Button>
-                            <span className="font-semibold w-8 text-center">{item.quantity}</span>
+                            <span className="font-semibold w-6 sm:w-8 text-center text-sm sm:text-base">{item.quantity}</span>
                             <Button 
                               variant="outline" 
                               size="icon" 
-                              className="h-8 w-8 rounded-full"
+                              className="h-7 w-7 sm:h-8 sm:w-8 rounded-full"
                               onClick={() => handleUpdateQuantity(item.id, item.variant, item.quantity + 1)}
                             >
-                              <Plus className="h-4 w-4" />
+                              <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
                             </Button>
                           </div>
                           
-                          <div className="text-right">
-                            <p className="text-2xl font-bold text-primary">₹{(item.price * item.quantity).toFixed(2)}</p>
-                            <p className="text-sm text-muted-foreground">₹{item.price.toFixed(2)} each</p>
+                          <div className="text-left sm:text-right">
+                            <p className="text-xl sm:text-2xl font-bold text-primary">₹{(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">₹{item.price.toFixed(2)} each</p>
                           </div>
                         </div>
                       </div>
@@ -99,10 +99,10 @@ const CartPage = () => {
                       <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="text-destructive hover:text-destructive"
+                        className="text-destructive hover:text-destructive flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10"
                         onClick={() => handleRemoveItem(item.id, item.variant)}
                       >
-                        <Trash2 className="h-5 w-5" />
+                        <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                       </Button>
                     </div>
                   </CardContent>

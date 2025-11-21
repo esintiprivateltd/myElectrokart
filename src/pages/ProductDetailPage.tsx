@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { PRODUCTS } from "@/data/products";
+import { PRODUCTS, CATEGORIES } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
+import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import RecentlyViewed from "@/components/RecentlyViewed";
+import SEOHead from "@/components/SEOHead";
 import ProductReviews from "@/components/ProductReviews";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductVariantSelector from "@/components/ProductVariantSelector";
@@ -22,8 +26,19 @@ export default function ProductDetailPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToRecentlyViewed } = useRecentlyViewed();
   const { toast } = useToast();
   const product = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
+  
+  // Add to recently viewed when product loads
+  useEffect(() => {
+    addToRecentlyViewed({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+    });
+  }, [product.id]);
 
   const [selectedVariantId, setSelectedVariantId] = useState(
     product.hasVariants && product.variants ? product.variants[0].id : "default"
@@ -121,11 +136,27 @@ export default function ProductDetailPage() {
     }
   };
 
+  const category = CATEGORIES.find(c => c.slug === product.category);
+  
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead 
+        title={`${product.title} - Buy Online`}
+        description={product.description || `Buy ${product.title} online at best price. ${category?.name || 'Industrial products'} with fast delivery across India.`}
+        keywords={`${product.title}, ${category?.name}, buy online, industrial products`}
+        image={product.image}
+        type="product"
+      />
       <Navigation />
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <Breadcrumbs 
+          items={[
+            { label: "Products", path: "/products" },
+            { label: category?.name || "Category", path: `/category/${product.category}` },
+            { label: product.title }
+          ]}
+        />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
           {/* Product Image Gallery */}
           <div>
             <ProductImageGallery 
@@ -136,9 +167,9 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <h1 className="text-3xl font-bold text-secondary mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-secondary mb-2">
                 {product.title}
               </h1>
               <div className="flex items-center gap-2 mb-4">
@@ -164,12 +195,12 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-primary">
+            <div className="flex items-baseline gap-2 sm:gap-3">
+              <span className="text-3xl sm:text-4xl font-bold text-primary">
                 ₹{displayPrice.toFixed(2)}
               </span>
               {displayOldPrice && (
-                <span className="text-xl line-through text-muted-foreground">
+                <span className="text-lg sm:text-xl line-through text-muted-foreground">
                   ₹{displayOldPrice.toFixed(2)}
                 </span>
               )}
@@ -221,26 +252,26 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-4 pt-4">
-              <div className="flex gap-4">
+            <div className="space-y-3 sm:space-y-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Button
                   onClick={handleAddToCart}
                   variant="default"
                   size="lg"
-                  className="flex-1"
+                  className="flex-1 w-full"
                   disabled={!isInStock}
                 >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   {isInStock ? 'Add to Cart' : 'Out of Stock'}
                 </Button>
                 <Button
                   onClick={handleBuyNow}
                   variant="gold"
                   size="lg"
-                  className="flex-1"
+                  className="flex-1 w-full"
                   disabled={!isInStock}
                 >
-                  <CreditCard className="w-5 h-5 mr-2" />
+                  <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Buy Now
                 </Button>
               </div>
@@ -288,13 +319,13 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Product Information Tabs */}
-        <div className="mt-16">
+        <div className="mt-8 sm:mt-12 lg:mt-16">
           <Tabs defaultValue="description" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-4 mb-8">
-              <TabsTrigger value="description">Description</TabsTrigger>
-              <TabsTrigger value="specifications">Specifications</TabsTrigger>
-              <TabsTrigger value="features">Features & Applications</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-6 sm:mb-8 gap-1 h-auto p-1">
+              <TabsTrigger value="description" className="text-xs sm:text-sm py-2 sm:py-3">Description</TabsTrigger>
+              <TabsTrigger value="specifications" className="text-xs sm:text-sm py-2 sm:py-3">Specifications</TabsTrigger>
+              <TabsTrigger value="features" className="text-xs sm:text-sm py-2 sm:py-3 col-span-2 sm:col-span-1">Features & Applications</TabsTrigger>
+              <TabsTrigger value="reviews" className="text-xs sm:text-sm py-2 sm:py-3 col-span-2 sm:col-span-1">Reviews</TabsTrigger>
             </TabsList>
             
             <TabsContent value="description" className="space-y-6">
@@ -314,6 +345,9 @@ export default function ProductDetailPage() {
             </TabsContent>
           </Tabs>
         </div>
+
+        {/* Recently Viewed Products */}
+        <RecentlyViewed />
       </main>
       <Footer />
     </div>

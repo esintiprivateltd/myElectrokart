@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-gradient-footer text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Company */}
           <div>
             <h3 className="font-bold mb-4 text-lg">Company</h3>
@@ -77,14 +77,14 @@ const Footer = () => {
           </div>
 
           {/* Connect With Us */}
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <h3 className="font-bold mb-4 text-lg">Connect With Us</h3>
-            <ul className="space-y-2 text-sm text-white/80 mb-4">
-              <li>📧 hr@sparesshop.net</li>
-              <li>🌐 www.myelectrokart.com</li>
-              <li>📍 301, 3rd Floor, B-Block CCC, VIP Road, Zirakpur</li>
-              <li>🏭 Plot No.6, Balaji Complex, Saidpura, DeraBassi</li>
-              <li>🧾 GST: 03AAICE8326L1ZG</li>
+            <ul className="space-y-2 text-sm text-white/80 mb-4 break-words">
+              <li className="flex items-start gap-2"><span>📧</span><span className="break-all">hr@sparesshop.net</span></li>
+              <li className="flex items-start gap-2"><span>🌐</span><span className="break-all">www.myelectrokart.com</span></li>
+              <li className="flex items-start gap-2"><span>📍</span><span>301, 3rd Floor, B-Block CCC, VIP Road, Zirakpur</span></li>
+              <li className="flex items-start gap-2"><span>🏭</span><span>Plot No.6, Balaji Complex, Saidpura, DeraBassi</span></li>
+              <li className="flex items-start gap-2"><span>🧾</span><span>GST: 03AAICE8326L1ZG</span></li>
             </ul>
             <div className="flex gap-3">
               <a 
@@ -115,8 +115,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/20 pt-8 text-center">
-          <p className="text-sm text-white/80">
+        <div className="border-t border-white/20 pt-6 sm:pt-8 text-center">
+          <p className="text-xs sm:text-sm text-white/80 px-4">
             © 2025 Esinti Private Limited. All rights reserved. | GST: 03AAICE8326L1ZG
           </p>
         </div>

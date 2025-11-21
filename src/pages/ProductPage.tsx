@@ -74,10 +74,10 @@ const ProductPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-24 lg:pt-28 pb-8 sm:pb-12">
         {/* Header with breadcrumb */}
-        <div className="mb-8 animate-fade-up">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <div className="mb-6 sm:mb-8 animate-fade-up">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground mb-2 flex-wrap">
             <Link to="/" className="hover:text-primary">Home</Link>
             <span>/</span>
             <Link to="/products" className="hover:text-primary">Products</Link>
@@ -88,10 +88,10 @@ const ProductPage = () => {
               </>
             )}
           </div>
-          <h1 className="text-4xl font-bold text-secondary">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary">
             {currentCategory?.name || "All Products"}
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"} found
           </p>
         </div>
@@ -99,15 +99,15 @@ const ProductPage = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
           <aside className={`lg:w-72 flex-shrink-0 ${mobileFiltersOpen ? "block" : "hidden lg:block"}`}>
-            <Card className="sticky top-24 rounded-2xl shadow-card">
-              <CardContent className="p-6 space-y-6">
+            <Card className="sticky top-20 sm:top-24 rounded-2xl shadow-card">
+              <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-secondary">Filters</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-secondary">Filters</h3>
                   <Button 
                     variant="ghost" 
                     size="sm" 
                     onClick={resetFilters}
-                    className="text-primary"
+                    className="text-primary text-xs sm:text-sm"
                   >
                     Reset
                   </Button>
@@ -227,7 +227,7 @@ const ProductPage = () => {
             ) : (
               <>
                 {/* Product Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
                   {filteredProducts.map((product) => (
                     <Card
                       key={product.id}
@@ -266,9 +266,9 @@ const ProductPage = () => {
                           </button>
                         </div>
                       </Link>
-                      <CardContent className="p-4">
+                      <CardContent className="p-3 sm:p-4">
                         <Link to={`/product/${product.id}`}>
-                          <h3 className="font-semibold mb-2 text-secondary line-clamp-2 hover:text-primary transition-colors">
+                          <h3 className="font-semibold mb-2 text-sm sm:text-base text-secondary line-clamp-2 hover:text-primary transition-colors">
                             {product.title}
                           </h3>
                         </Link>
@@ -289,24 +289,24 @@ const ProductPage = () => {
                             {product.description}
                           </p>
                         )}
-                        <div className="flex items-center gap-2 mb-4">
-                          <span className="text-xl font-bold text-primary">₹{product.price.toFixed(2)}</span>
+                        <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                          <span className="text-lg sm:text-xl font-bold text-primary">₹{product.price.toFixed(2)}</span>
                           {product.oldPrice && (
-                            <span className="text-sm text-gray-400 line-through">₹{product.oldPrice.toFixed(2)}</span>
+                            <span className="text-xs sm:text-sm text-gray-400 line-through">₹{product.oldPrice.toFixed(2)}</span>
                           )}
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-col sm:flex-row">
                           <Button 
                             variant="gold" 
-                            className="flex-1 rounded-full"
+                            className="flex-1 rounded-full text-sm sm:text-base"
                             onClick={() => handleAddToCart(product)}
                           >
-                            <ShoppingCart className="mr-2 h-4 w-4" />
-                            Add
+                            <ShoppingCart className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                            Add to Cart
                           </Button>
                           <Link to={`/product/${product.id}`} className="flex-1">
-                            <Button variant="outline" className="w-full rounded-full">
-                              View
+                            <Button variant="outline" className="w-full rounded-full text-sm sm:text-base">
+                              View Details
                             </Button>
                           </Link>
                         </div>

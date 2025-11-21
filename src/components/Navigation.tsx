@@ -158,7 +158,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-2 bg-white rounded-2xl shadow-xl p-4 space-y-4">
+          <div className="lg:hidden mt-3 bg-white rounded-2xl shadow-xl p-4 space-y-3 max-h-[calc(100vh-100px)] overflow-y-auto">
             {navLinks.map((link) => (
               <Link
                 key={link.path}

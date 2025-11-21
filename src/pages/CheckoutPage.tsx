@@ -35,18 +35,18 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-        <h1 className="text-4xl font-bold text-secondary mb-8">Checkout</h1>
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <h1 className="text-3xl sm:text-4xl font-bold text-secondary mb-6 sm:mb-8">Checkout</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Checkout Form */}
-          <div className="lg:col-span-2 bg-card rounded-2xl shadow-card p-8">
+          <div className="lg:col-span-2 bg-card rounded-2xl shadow-card p-4 sm:p-6 lg:p-8">
             {/* Step Indicator */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6 sm:mb-8">
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex items-center">
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold text-sm sm:text-base ${
                       step >= s
                         ? "bg-gradient-primary text-white"
                         : "bg-muted text-muted-foreground"
@@ -56,7 +56,7 @@ export default function CheckoutPage() {
                   </div>
                   {s < 3 && (
                     <div
-                      className={`w-20 h-1 mx-2 ${
+                      className={`w-12 sm:w-20 h-1 mx-1 sm:mx-2 ${
                         step > s ? "bg-primary" : "bg-muted"
                       }`}
                     />
@@ -67,9 +67,9 @@ export default function CheckoutPage() {
 
             {/* Step 1: Shipping */}
             {step === 1 && (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold">Shipping Information</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-4 sm:space-y-6">
+                <h2 className="text-xl sm:text-2xl font-semibold">Shipping Information</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <Label>First Name</Label>
                     <Input
@@ -131,7 +131,7 @@ export default function CheckoutPage() {
                       placeholder="Enter GST number (optional)"
                     />
                   </div>
-                  <div className="md:col-span-2">
+                  <div className="sm:col-span-2">
                     <Label>Address</Label>
                     <Input
                       value={form.address}
@@ -229,18 +229,18 @@ export default function CheckoutPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="bg-card rounded-2xl shadow-card p-8 h-fit">
-            <h3 className="text-2xl font-semibold mb-6">Order Summary</h3>
-            <div className="space-y-4">
+          <div className="bg-card rounded-2xl shadow-card p-4 sm:p-6 lg:p-8 h-fit">
+            <h3 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Order Summary</h3>
+            <div className="space-y-3 sm:space-y-4">
               {cart.map((item, idx) => (
-                <div key={idx} className="flex justify-between py-2">
-                  <div className="flex-1">
-                    <div className="font-medium">{item.title}</div>
-                    <div className="text-sm text-muted-foreground">
+                <div key={idx} className="flex justify-between py-2 gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-sm sm:text-base line-clamp-2">{item.title}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
                       {item.variant} Pin × {item.quantity}
                     </div>
                   </div>
-                  <div className="font-semibold">
+                  <div className="font-semibold text-sm sm:text-base flex-shrink-0">
                     ₹{(item.price * item.quantity).toFixed(2)}
                   </div>
                 </div>
